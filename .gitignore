@@ -37,3 +37,12 @@ environment.development.ts
 *.db-shm
 *.db-wal
 *.pdb
+bin/
+obj/
+*.user
+*.suo
+*.db
+*.sqlite
+*.pdb
+*.cache
+.vs/
