@@ -13,6 +13,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<GetMochilasByUserIdUseCase>();
 builder.Services.AddScoped<GetMochilaCardsByUserIdUseCase>();
 builder.Services.AddScoped<CreateQuestaoUseCase>();
+builder.Services.AddScoped<IUsuarioReadRepository, UsuarioReadRepository>();
+builder.Services.AddScoped<GetPlanoUsuarioUseCase>();
+
 
 builder.Services.AddScoped<IUsuarioReadRepository, UsuarioReadRepository>();
 builder.Services.AddScoped<GetPlanoUsuarioUseCase>();

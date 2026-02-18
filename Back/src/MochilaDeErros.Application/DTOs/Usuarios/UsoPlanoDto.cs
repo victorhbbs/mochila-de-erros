@@ -1,5 +1,4 @@
 namespace MochilaDeErros.Application.DTOs.Usuarios;
-
 public class UsoPlanoDto
 {
    public int Limite {get; set;}
@@ -11,3 +10,4 @@ public class UsoPlanoDto
    public bool AtingiuLimite => Utilizadas >= Limite;
 
 }
+

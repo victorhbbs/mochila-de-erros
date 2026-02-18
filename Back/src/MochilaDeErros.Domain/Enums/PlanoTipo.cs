@@ -5,3 +5,4 @@ public enum PlanoTipo {
     Premium = 1,
     Empresarial = 2
 }
+

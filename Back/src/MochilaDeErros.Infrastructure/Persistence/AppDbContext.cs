@@ -9,7 +9,6 @@ public class AppDbContext : DbContext
         : base(options)
     {
     }
-
     public DbSet<Usuario> Usuarios => Set<Usuario>();
     public DbSet<Mochila> Mochilas => Set<Mochila>();
     public DbSet<MochilaTag> MochilaTags => Set<MochilaTag>();

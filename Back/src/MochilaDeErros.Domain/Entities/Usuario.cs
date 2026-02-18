@@ -1,6 +1,5 @@
 using MochilaDeErros.Domain.Enums;
-using MochilaDeErros.Domain.Exceptions;
-
+using MochilaDeErros.Domain.Entities;
 namespace MochilaDeErros.Domain.Entities;
 
 public class Usuario
@@ -14,11 +13,12 @@ public class Usuario
 
     public IReadOnlyCollection<Mochila> Mochilas => _mochilas;
     public bool PodeCriarMochila()
-    {
+{
     if (Plano == PlanoTipo.Gratuito)
         return Mochilas.Count < 5;
 
     return true;
-    }
+}
+
 
 }
