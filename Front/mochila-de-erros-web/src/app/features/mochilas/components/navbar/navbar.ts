@@ -5,7 +5,7 @@ import { MochilaCard } from '../../models/mochilas-card.model';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MochilaCardComponent, CommonModule],
+  imports: [CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.scss',
 })
