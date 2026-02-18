@@ -17,6 +17,9 @@ builder.Services.AddScoped<IUsuarioReadRepository, UsuarioReadRepository>();
 builder.Services.AddScoped<GetPlanoUsuarioUseCase>();
 
 
+builder.Services.AddScoped<IUsuarioReadRepository, UsuarioReadRepository>();
+builder.Services.AddScoped<GetPlanoUsuarioUseCase>();
+
 builder.Services.AddInfrastructure(builder.Configuration);
 
 builder.Services.AddCors(options =>
