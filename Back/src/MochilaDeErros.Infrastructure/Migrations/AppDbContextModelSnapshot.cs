@@ -73,7 +73,12 @@ namespace MochilaDeErros.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid?>("UsuarioId")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Mochilas");
                 });
@@ -131,6 +136,28 @@ namespace MochilaDeErros.Infrastructure.Migrations
                     b.ToTable("Questoes");
                 });
 
+            modelBuilder.Entity("MochilaDeErros.Domain.Entities.Usuario", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Plano")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Usuarios");
+                });
+
             modelBuilder.Entity("MochilaDeErros.Domain.Entities.Alternativa", b =>
                 {
                     b.HasOne("MochilaDeErros.Domain.Entities.Questao", null)
@@ -138,6 +165,13 @@ namespace MochilaDeErros.Infrastructure.Migrations
                         .HasForeignKey("QuestaoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MochilaDeErros.Domain.Entities.Mochila", b =>
+                {
+                    b.HasOne("MochilaDeErros.Domain.Entities.Usuario", null)
+                        .WithMany("Mochilas")
+                        .HasForeignKey("UsuarioId");
                 });
 
             modelBuilder.Entity("MochilaDeErros.Domain.Entities.MochilaTag", b =>
@@ -157,6 +191,11 @@ namespace MochilaDeErros.Infrastructure.Migrations
             modelBuilder.Entity("MochilaDeErros.Domain.Entities.Questao", b =>
                 {
                     b.Navigation("Alternativas");
+                });
+
+            modelBuilder.Entity("MochilaDeErros.Domain.Entities.Usuario", b =>
+                {
+                    b.Navigation("Mochilas");
                 });
 #pragma warning restore 612, 618
         }
