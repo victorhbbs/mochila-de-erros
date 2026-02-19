@@ -161,9 +161,7 @@ https://localhost:5001/swagger
 
 🧪 Testes unitários e de integração
 
-👨‍💻 Autor
+👨‍💻 Autores
 
-Seu Nome
-Backend Developer
-LinkedIn
- | GitHub
+Júlia Forny de Souza Muniz
+Victor Hugo Borba
