@@ -25,4 +25,14 @@ public class MochilasController : ControllerBase
         var id = await useCase.ExecuteAsync(request);
         return CreatedAtAction(nameof(Create), new { id }, null);
     }
+
+    [HttpDelete("{mochilaId}")]
+    public async Task<IActionResult> Delete(
+        Guid mochilaId,
+        [FromQuery] Guid userId,
+        [FromServices] DeleteMochilaUseCase useCase)
+    {
+        await useCase.ExecuteAsync(userId, mochilaId);
+        return NoContent();
+    }
 }

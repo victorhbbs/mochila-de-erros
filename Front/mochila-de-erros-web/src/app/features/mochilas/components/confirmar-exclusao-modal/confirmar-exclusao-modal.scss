@@ -1,0 +1,82 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 28px 32px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: scaleIn 0.18s ease-out;
+}
+
+.modal h2 {
+  margin: 0 0 12px;
+  font-size: 1.4rem;
+  color: #111827;
+}
+
+.modal p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+}
+
+.modal strong {
+  color: #111827;
+}
+
+.acoes {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+button.cancelar {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+button.cancelar:hover {
+  background: #e5e7eb;
+}
+
+button.confirmar {
+  background: #7c3aed;
+  color: white;
+}
+
+button.confirmar:hover {
+  background: #6d28d9;
+  transform: translateY(-1px);
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

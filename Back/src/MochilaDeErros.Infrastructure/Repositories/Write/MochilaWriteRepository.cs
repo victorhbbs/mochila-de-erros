@@ -18,6 +18,12 @@ public class MochilaWriteRepository : IMochilaWriteRepository
         await _context.Mochilas.AddAsync(mochila);
     }
 
+    public Task DeleteAsync(Mochila mochila)
+    {
+        _context.Mochilas.Remove(mochila);
+        return Task.CompletedTask;
+    }
+
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

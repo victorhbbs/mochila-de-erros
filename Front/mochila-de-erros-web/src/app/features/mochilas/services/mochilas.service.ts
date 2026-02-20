@@ -22,5 +22,12 @@ export class MochilasService {
     create(payload: any){
         return this.http.post(this.api, payload);
     }
+
+    delete(mochilaId: string, userId: string){
+        return this.http.delete(
+            `${this.api}/${mochilaId}`,
+            { params: {userId }}
+        );
+    }
   
 }

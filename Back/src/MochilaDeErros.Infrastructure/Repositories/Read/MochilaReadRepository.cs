@@ -3,6 +3,7 @@ using MochilaDeErros.Application.DTOs.Mochilas;
 using MochilaDeErros.Application.Interfaces.Repositories.Read;
 using MochilaDeErros.Domain.Enums;
 using MochilaDeErros.Infrastructure.Persistence;
+using MochilaDeErros.Domain.Entities;
 
 namespace MochilaDeErros.Infrastructure.Repositories.Read;
 
@@ -77,5 +78,11 @@ public class MochilaReadRepository : IMochilaReadRepository
     {
         return await _context.Mochilas.AsNoTracking()
             .AnyAsync(m => m.Id == mochilaId && m.UsuarioId == userId && m.Ativa);
+    }
+
+    public async Task<Mochila?> GetByIdAsync(Guid mochilaId)
+    {
+    return await _context.Mochilas
+        .FirstOrDefaultAsync(m => m.Id == mochilaId);
     }
 }

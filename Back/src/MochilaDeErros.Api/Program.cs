@@ -19,7 +19,7 @@ builder.Services.AddScoped<GetPlanoUsuarioUseCase>();
 builder.Services.AddScoped<IUsuarioWriteRepository, UsuarioWriteRepository>();
 builder.Services.AddScoped<CreateUsuarioUseCase>();
 builder.Services.AddScoped<CreateMochilaRequest>();
-
+builder.Services.AddScoped<DeleteMochilaUseCase>();
 
 builder.Services.AddInfrastructure(builder.Configuration);
 

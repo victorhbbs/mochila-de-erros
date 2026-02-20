@@ -8,6 +8,7 @@ import { CriarMochilaModal } from '../../../components/criar-mochila-modal/criar
 import { FormsModule } from '@angular/forms';
 import { UsoPlano } from '../../../models/uso-plano.model';
 import { UsuarioService } from '../../../services/usuario.service';
+import { ConfirmarExclusaoModal } from '../../../components/confirmar-exclusao-modal/confirmar-exclusao-modal';
 
 @Component({
   selector: 'app-mochilas-page',
@@ -16,62 +17,69 @@ import { UsuarioService } from '../../../services/usuario.service';
     CommonModule, 
     Rodape, 
     CriarMochilaModal, 
-    FormsModule
+    FormsModule,
+    ConfirmarExclusaoModal
   ],
   templateUrl: './mochilas-page.html',
   styleUrl: './mochilas-page.scss',
 })
+
 export class MochilasPage {
-    mochilas: MochilaCard[] = [];
-    carregando = true;
+  mochilas: MochilaCard[] = [];
+  carregando = true;
 
-    modalAberto = false;
+  usoPlano?: UsoPlano;
+  planoLabel = 'gratuito';
 
-    usoPlano: UsoPlano | null = null;
-    planoLabel = 'gratuito';
+  modalCriarAberto = false;   // ✅ ADICIONADO
+  modalExcluirAberto = false;
+  mochilaSelecionada?: MochilaCard;
 
-    // temporário, depois substituir por ID do usuário logado
-    private userId = '3fa85f64-5717-4562-b3fc-2c963f66afa6';
+  private userId = 'f5555320-e445-48f7-90f6-232013934910';
 
-    constructor(private mochilasService: MochilasService, private usuarioService: UsuarioService) {}
+  constructor(
+    private mochilasService: MochilasService,
+    private usuarioService: UsuarioService
+  ) {}
 
-    carregarMochilas(){
-      this.mochilasService.getCards(this.userId).subscribe({
-        next: (data) => {
-          this.mochilas = data;
-          this.carregando = false;
-        },
-        error: () => {
-          this.carregando = false;
-        }
-      });
-    }
+  ngOnInit() {
+    this.carregarMochilas();
+    this.carregarUsoPlano();
+  }
 
-    ngOnInit(): void {
-      this.carregarMochilas();
+  carregarMochilas() {
+    this.mochilasService.getCards(this.userId).subscribe(data => {
+      this.mochilas = data;
+      this.carregando = false;
+    });
+  }
+
+  abrirConfirmacao(mochila: MochilaCard) {
+    this.mochilaSelecionada = mochila;
+    this.modalExcluirAberto = true;
+  }
+
+  fecharConfirmacao() {
+    this.modalExcluirAberto = false;
+    this.mochilaSelecionada = undefined;
+  }
+
+  confirmarExclusao() {
+    if (!this.mochilaSelecionada) return;
+
+    const id = this.mochilaSelecionada.id;
+
+    this.mochilasService.delete(id, this.userId).subscribe(() => {
+      this.mochilas = this.mochilas.filter(m => m.id !== id);
+      this.fecharConfirmacao();
       this.carregarUsoPlano();
-    }
+    });
+  }
 
-    carregarUsoPlano(){
-      this.usuarioService
-        .getUsoPlano(this.userId)
-        .subscribe(data => {
-          this.usoPlano = data;
-          this.planoLabel = data.plano.toLowerCase();
-        });
-    }
-
-    abrirModal() {
-      this.modalAberto = true;
-    }
-
-    fecharModal() {
-      this.modalAberto = false;
-    }
-
-    onMochilaCriada() {
-      this.fecharModal();
-      this.carregarMochilas();
-      this.carregarUsoPlano();
-    }
+  carregarUsoPlano() {
+    this.usuarioService.getUsoPlano(this.userId).subscribe(data => {
+      this.usoPlano = data;
+      this.planoLabel = data.plano.toLowerCase();
+    });
+  }
 }

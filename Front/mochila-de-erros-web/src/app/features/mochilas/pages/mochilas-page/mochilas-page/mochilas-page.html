@@ -1,67 +1,69 @@
-
 <main>
-      <div class="topo-mochilas">
-        <div class="topo-header">
-          <div>
-            <h1>Minhas Mochilas</h1>
-            <span class="sub">
-              <ng-container *ngIf="usoPlano?.limite !== 2147483647; else ilimitado">
-                {{ usoPlano?.utilizadas }} de {{ usoPlano?.limite }} mochilas utilizadas
-              </ng-container>
+  <div class="topo-mochilas">
+    <div class="topo-header">
+      <div>
+        <h1>Minhas Mochilas</h1>
 
-              <ng-template #ilimitado>
-                {{ usoPlano?.utilizadas }} mochilas utilizadas (ilimitado)
-              </ng-template>
-            </span>
-          </div>
+        <span class="sub">
+          <ng-container *ngIf="usoPlano?.limite !== 2147483647; else ilimitado">
+            {{ usoPlano?.utilizadas }} de {{ usoPlano?.limite }} mochilas utilizadas
+          </ng-container>
 
-          <button
-            class="nova-mochila"
-            [disabled]="usoPlano?.atingiuLimite"
-            (click)="abrirModal()">
-            + Nova Mochila
-          </button>
+          <ng-template #ilimitado>
+            {{ usoPlano?.utilizadas }} mochilas utilizadas (ilimitado)
+          </ng-template>
+        </span>
+      </div>
+
+      <button
+        class="nova-mochila"
+        [disabled]="usoPlano?.atingiuLimite"
+        (click)="modalCriarAberto = true">
+        + Nova Mochila
+      </button>
+    </div>
+
+    <div class="plano-info">
+      <span>Uso do plano {{ planoLabel }}</span>
+      <span>{{ usoPlano?.utilizadas }}/{{ usoPlano?.limite }}</span>
+    </div>
+
+    <div *ngIf="usoPlano && usoPlano.limite !== 2147483647">
+      <div class="barra">
+        <div
+          class="barra-preenchida"
+          [style.width.%]="usoPlano.percentual">
         </div>
-
-        <div class="plano-info">
-          <span>Uso do plano {{ planoLabel }}</span>
-          <span>{{ usoPlano?.utilizadas }}/{{ usoPlano?.limite }}</span>
-        </div>
-
-        <div *ngIf="usoPlano as plano">
-          <div *ngIf="usoPlano && usoPlano.limite !== 2147483647">
-            <div class="barra">
-              <div
-                class="barra-preenchida"
-                [style.width.%]="usoPlano.percentual"
-                [ngClass]="{
-                  'warning': usoPlano.percentual >= 80 && usoPlano.percentual < 100,
-                  'danger': usoPlano.percentual >= 100
-                }">
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <app-criar-mochila-modal
-          *ngIf="modalAberto"
-          (fechar)="fecharModal()"
-          (criada)="onMochilaCriada()">
-        </app-criar-mochila-modal>
       </div>
-      <div *ngIf="carregando" class="estado">
-        Carregando mochilas...
-      </div>
+    </div>
 
-      <div *ngIf="!carregando && mochilas.length === 0" class="estado">
-        Mochilas não carregadas
-      </div>
+    <!-- MODAL CRIAR -->
+    <app-criar-mochila-modal
+      *ngIf="modalCriarAberto"
+      (fechar)="modalCriarAberto = false"
+      (criada)="modalCriarAberto = false; carregarMochilas(); carregarUsoPlano()">
+    </app-criar-mochila-modal>
+  </div>
 
-      <div class="grid" *ngIf="!carregando && mochilas.length > 0">
-        <app-mochila-card
-          *ngFor="let mochila of mochilas"
-          [card]="mochila">
-        </app-mochila-card>
-      </div>
-      <app-rodape></app-rodape>
+  <div *ngIf="carregando" class="estado">
+    Carregando mochilas...
+  </div>
+
+  <div class="grid" *ngIf="!carregando && mochilas.length">
+    <app-mochila-card
+      *ngFor="let mochila of mochilas"
+      [card]="mochila"
+      (solicitarExclusao)="abrirConfirmacao($event)">
+    </app-mochila-card>
+  </div>
+
+  <!-- MODAL EXCLUIR -->
+  <app-confirmar-exclusao-modal
+    *ngIf="modalExcluirAberto"
+    [nome]="mochilaSelecionada?.nome ?? ''"
+    (cancelarEvt)="fecharConfirmacao()"
+    (confirmarEvt)="confirmarExclusao()">
+  </app-confirmar-exclusao-modal>
+
+  <app-rodape></app-rodape>
 </main>

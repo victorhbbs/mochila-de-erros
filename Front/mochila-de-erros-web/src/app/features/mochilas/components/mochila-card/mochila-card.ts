@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MochilaCard } from '../../models/mochilas-card.model';
 import { Router } from '@angular/router';
@@ -12,10 +12,15 @@ import { Router } from '@angular/router';
 })
 export class MochilaCardComponent {
   @Input() card!: MochilaCard;
+  @Output() solicitarExclusao = new EventEmitter<MochilaCard>();
 
   constructor(private router: Router) {}
 
-  abrirMochila(){
+  pedirExclusao() {
+    this.solicitarExclusao.emit(this.card);
+  }
+
+  abrirMochila() {
     this.router.navigate([
       '/mochilas',
       this.card.id,

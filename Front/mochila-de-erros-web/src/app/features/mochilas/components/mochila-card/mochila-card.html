@@ -42,16 +42,9 @@
 
       <button
         class="icone"
-        title="Compartilhar"
-        (click)="$event.stopPropagation()">
-        🔗
-      </button>
-
-      <button
-        class="icone"
-        title="Configurações"
-        (click)="$event.stopPropagation()">
-        ⚙
+        title="Excluir"
+        (click)="$event.stopPropagation(); pedirExclusao()">
+        <i class="fa-regular fa-trash-can"></i>
       </button>
     </div>
   </div>
